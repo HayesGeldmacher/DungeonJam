@@ -734,7 +734,8 @@ MonoBehaviour:
   - {fileID: 1387173550223104758, guid: ae084c76daec2a647944f190b51a4e83, type: 3}
   - {fileID: 1387173550223104758, guid: 7aee5bc15e1bb924f81dd60469e59c80, type: 3}
   - {fileID: 1387173550223104758, guid: 38e2039d1390a744ab717d1e0d759837, type: 3}
-  _seedSegment: {fileID: 1387173550223104758, guid: ba2c812f59914a64da6082594a813f05, type: 3}
+  _startSegment: {fileID: 1387173550223104758, guid: ba2c812f59914a64da6082594a813f05, type: 3}
+  _goalSegment: {fileID: 0}
   _terminalSegment: {fileID: 9221711084690197974, guid: 9d1f96b42b1d48644ac1c40d60f0f158, type: 3}
   _maxSegments: 25
 --- !u!4 &1801144724
