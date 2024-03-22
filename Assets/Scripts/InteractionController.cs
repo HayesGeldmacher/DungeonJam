@@ -36,6 +36,7 @@ public class InteractionController : MonoBehaviour
         if (Input.GetKeyDown(_interactKey))
         {
             _currentInteractable?.OnInteract();
+            _promptGUI.text = "";
         }
     }
 }

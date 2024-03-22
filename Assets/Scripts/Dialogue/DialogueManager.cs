@@ -37,6 +37,8 @@ public class DialogueManager : MonoBehaviour
     //Begins a conversation when the dialogue trigger is activated from an NPC or item
     public void StartDialogue(Dialogue _dialogue, DialogueTrigger _trigger)
     {
+        FindObjectOfType<PlayerController>().Lock(this);
+
         _currentTrigger = _trigger;
 
         if (_textBoxAnim != null)
@@ -78,6 +80,7 @@ public class DialogueManager : MonoBehaviour
             //This line will cause errors until we actually make the trigger!
             _currentTrigger._startedTalking = false;
         }
+        FindObjectOfType<PlayerController>().Unlock(this);
     }
 
     public void CallTimerEnd(float _textTime)

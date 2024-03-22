@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _repeatDelay = .4f;
     [SerializeField] private float _repeatRate = .2f;
 
+    private List<Object> _locks = new List<Object>();
     private bool _isBusy = false;
     private Queue<MovementCommand> _commandQueue = new Queue<MovementCommand>();
 
@@ -157,6 +158,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (_locks.Count > 0)
+        {
+            return;
+        }
+
         if (TryGetCommand(out MovementCommand command))
         {
             _commandQueue.Enqueue(command);
@@ -173,5 +179,15 @@ public class PlayerController : MonoBehaviour
         _isBusy = true;
         yield return command.Execute(this);
         _isBusy = false;
+    }
+
+    public void Lock(Object lockObject)
+    {
+        _locks.Add(lockObject);
+    }
+
+    public void Unlock(Object lockObject)
+    {
+        _locks.Remove(lockObject);
     }
 }
