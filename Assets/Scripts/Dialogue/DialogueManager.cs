@@ -7,7 +7,7 @@ public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _dialogueText;
     [SerializeField] private Animator _textBoxAnim;
-    private Interactable _currentTrigger;
+    private DialogueTrigger _currentTrigger;
     private Queue<string> _sentences;
 
 
@@ -35,11 +35,12 @@ public class DialogueManager : MonoBehaviour
     }
 
     //Begins a conversation when the dialogue trigger is activated from an NPC or item
-    public void StartDialogue(Dialogue _dialogue, Interactable _trigger)
+    public void StartDialogue(Dialogue _dialogue, DialogueTrigger _trigger)
     {
         _currentTrigger = _trigger;
 
-        _textBoxAnim.SetBool("active", true);
+        if (_textBoxAnim != null)
+            _textBoxAnim.SetBool("active", true);
 
         _sentences.Clear();
 
@@ -69,7 +70,8 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         Debug.Log("End of Conversation");
-        _textBoxAnim.SetBool("active", false);
+        if (_textBoxAnim != null)
+            _textBoxAnim.SetBool("active", false);
         _dialogueText.text = "";
         if (_currentTrigger)
         {

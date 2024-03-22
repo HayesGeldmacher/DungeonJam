@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public class DialogueTrigger : Interactable
 {
     //This script is a parent script that many objects will inherit from
 
@@ -24,7 +24,7 @@ public class Interactable : MonoBehaviour
         _manager = DialogueManager.instance;
     }
 
-    public virtual void Interact()
+    public override void OnInteract()
     {
         if (_canTalk)
         {
@@ -36,8 +36,8 @@ public class Interactable : MonoBehaviour
     {
         if (!_startedTalking)
         {
-            Interactable _interactable = transform.GetComponent<Interactable>();
-            _manager.StartDialogue(_dialogue, _interactable);
+            DialogueTrigger _trigger = transform.GetComponent<DialogueTrigger>();
+            _manager.StartDialogue(_dialogue, this);
             _startedTalking = true;
         }
         else
