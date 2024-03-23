@@ -30,7 +30,8 @@ public class ActionBarUI : MonoBehaviour
 
     private void Update()
     {
-        float normalizedTime = CombatManager.NormalizedTurnTime;
+        // float normalizedTime = CombatManager.NormalizedTurnTime;
+        float normalizedTime = 0;
         for (int i = 0; i < _tickMarks.Count; i++)
         {
             _tickMarks[i].anchoredPosition = new Vector2((i + normalizedTime) * TurnWidth, 0);

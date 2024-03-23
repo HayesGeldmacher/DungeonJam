@@ -7,15 +7,15 @@ public class PlayerAgent : CombatAgent
     [SerializeField] private Action _primaryAction;
     [SerializeField] private Action _secondaryAction;
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            QueueAction(_primaryAction);
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            QueueAction(_secondaryAction);
-        }
-    }
+    // void Update()
+    // {
+    //     if (Input.GetMouseButtonDown(0))
+    //     {
+    //         QueueAction(_primaryAction);
+    //     }
+    //     if (Input.GetMouseButtonDown(1))
+    //     {
+    //         QueueAction(_secondaryAction);
+    //     }
+    //
 }

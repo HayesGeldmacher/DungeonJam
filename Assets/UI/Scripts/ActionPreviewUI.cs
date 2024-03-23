@@ -28,7 +28,9 @@ public class ActionPreviewUI : MonoBehaviour
 
     private void Update()
     {
-        float normalizedTime = _actionBar.CombatManager.NormalizedTurnTime;
+        float x = _actionBar.CombatManager.NormalizedTurnTime;
+        x = (x < .1) ? 0 : (x > 0.90) ? 1 : (x - 0.1f) / 0.8f; // ease in out quad
+        float normalizedTime = (x < 0.5) ? 4 * x * x * x : 1 - Mathf.Pow(-2 * x + 2, 3) / 2; // ease in out cubic
 
         List<Action> actions = _combatAgent.GetActions();
         List<Action> history = _combatAgent.GetActionHistory();

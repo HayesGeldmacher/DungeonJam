@@ -4,12 +4,25 @@ using UnityEngine;
 
 public abstract class CombatAgent : MonoBehaviour
 {
+    public int StartingHealth;
+    public int CurrentHealth { get; private set; }
+
     private Queue<Action> _actions = new Queue<Action>();
     private Stack<Action> _actionHistory = new Stack<Action>();
 
     [SerializeField] private Action _preparationAction;
     [SerializeField] private Action _recoveryAction;
     [SerializeField] private Action _nothingAction;
+    
+    private void Awake()
+    {
+        CurrentHealth = StartingHealth;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        CurrentHealth -= damage;
+    }
 
     public void QueueAction(Action action)
     {

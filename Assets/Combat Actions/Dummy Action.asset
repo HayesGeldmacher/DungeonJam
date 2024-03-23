@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4e95f70395a5074f8530159f3904875, type: 3}
-  m_Name: ShieldBash
+  m_Name: Dummy Action
   m_EditorClassIdentifier: 
-  Name: Block
-  Icon: {fileID: 21300000, guid: 802ca2c54d14c6e438c5cfca050837d5, type: 3}
+  Name: 
+  Icon: {fileID: 21300000, guid: 58ecdfe65985f8f439e1ee3934e6a55a, type: 3}
   PreparationTurns: 0
   RecoveryTurns: 0
   damage: 0
