@@ -8,7 +8,7 @@ public class DamageAction : Action
     [Header("Damage Action")]
     [SerializeField] private int damage;
 
-    public override void Execute()
+    public override void Execute(CombatManager context)
     {
         Debug.Log("Dealing " + damage + " damage!");
     }

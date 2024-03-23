@@ -11,11 +11,11 @@ public class PlayerAgent : CombatAgent
     {
         if (Input.GetMouseButtonDown(0))
         {
-            QueueAction(Instantiate(_primaryAction));
+            QueueAction(_primaryAction);
         }
         if (Input.GetMouseButtonDown(1))
         {
-            QueueAction(Instantiate(_secondaryAction));
+            QueueAction(_secondaryAction);
         }
     }
 }

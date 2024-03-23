@@ -10,23 +10,28 @@ public abstract class CombatAgent : MonoBehaviour
     [SerializeField] private Action _preparationAction;
     [SerializeField] private Action _recoveryAction;
     [SerializeField] private Action _nothingAction;
-    
+
     public void QueueAction(Action action)
+    {
+        QueueAction(action, new List<CombatAgent>());
+    }
+    
+    public void QueueAction(Action action, List<CombatAgent> targets)
     {
         for (int i = 0; i < action.PreparationTurns; i++)
         {
-            _actions.Enqueue(Instantiate(_preparationAction));
+            _actions.Enqueue(Instantiate(_preparationAction).SetUser(this));
         }
-        _actions.Enqueue(action);
+        _actions.Enqueue(Instantiate(action).SetUser(this).SetTargets(targets));
         for (int i = 0; i < action.RecoveryTurns; i++)
         {
-            _actions.Enqueue(Instantiate(_recoveryAction));
+            _actions.Enqueue(Instantiate(_recoveryAction).SetUser(this));
         }
     }
 
     public Action GetNextAction()
     {
-        Action action = _actions.Count > 0 ? _actions.Dequeue() : Instantiate(_nothingAction);
+        Action action = _actions.Count > 0 ? _actions.Dequeue() : Instantiate(_nothingAction).SetUser(this);
         _actionHistory.Push(action);
         return action;
     }

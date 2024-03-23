@@ -29,7 +29,7 @@ public class CombatManager : MonoBehaviour
     {
         foreach (var agent in Agents)
         {
-            agent.GetNextAction()?.Execute();
+            agent.GetNextAction().SetUser(agent).Execute(this);
         }
     }
 }
