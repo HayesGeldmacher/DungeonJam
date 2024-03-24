@@ -17,10 +17,12 @@ public abstract class CombatAgent : MonoBehaviour
     [SerializeField] protected Action _preparationAction;
     [SerializeField] protected Action _recoveryAction;
     [SerializeField] protected Action _nothingAction;
+    protected CombatManager _combatManager;
     
     protected virtual void Awake()
     {
         CurrentHealth = MaxHealth;
+        _combatManager = FindObjectOfType<CombatManager>();
     }
 
     public void TakeDamage(int damage)
@@ -28,30 +30,22 @@ public abstract class CombatAgent : MonoBehaviour
         CurrentHealth -= Mathf.Abs(damage - DamageNegation);
     }
 
-    public void CreateAndQueueAction(Action action, CombatAgent target)
+    public void QueueAction(Action action)
     {
-        CreateAndQueueAction(action, new List<CombatAgent> { target });
-    }
-    
-    public void CreateAndQueueAction(Action action, List<CombatAgent> targets)
-    {
-        action = Instantiate(action).SetUser(this).SetTargets(targets);
-        // Maybe do other things with the action here
-         
         for (int i = 0; i < action.PreparationTurns; i++)
         {
-            _actions.Enqueue(Instantiate(_preparationAction).SetUser(this));
+            _actions.Enqueue(_preparationAction.CreateWithUser(this));
         }
         _actions.Enqueue(action);
         for (int i = 0; i < action.RecoveryTurns; i++)
         {
-            _actions.Enqueue(Instantiate(_recoveryAction).SetUser(this));
+            _actions.Enqueue(_recoveryAction.CreateWithUser(this));
         }
     }
 
     public Action GetNextAction()
     {
-        Action action = _actions.Count > 0 ? _actions.Dequeue() : Instantiate(_nothingAction).SetUser(this);
+        Action action = _actions.Count > 0 ? _actions.Dequeue() : _nothingAction.CreateWithUser(this);
         _actionHistory.Push(action);
         return action;
     }

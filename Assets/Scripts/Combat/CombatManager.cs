@@ -30,6 +30,7 @@ public class CombatManager : MonoBehaviour
         {
             actions.Add(agent.GetNextAction());
         }
+        // TODO: Buffs / Effects should be processed here
         foreach (var action in actions)
         {
             if (action.Priority)

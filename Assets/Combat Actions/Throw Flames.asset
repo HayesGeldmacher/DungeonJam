@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4e95f70395a5074f8530159f3904875, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b785090029ab2d4b8fdf0ebbdb1acf9, type: 3}
   m_Name: Throw Flames
   m_EditorClassIdentifier: 
   Name: Throw Flames
   Icon: {fileID: 21300000, guid: 858332fb8f9547141adbd90152b9d789, type: 3}
   PreparationTurns: 0
   RecoveryTurns: 1
-  damage: 0
+  _damage: 10
