@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ActionBarUI : MonoBehaviour
+public class CombatBarUI : MonoBehaviour
 {
     public CombatManager CombatManager;
     public int TurnCount = 5;
     public RectTransform Line;
     public RectTransform TickMarkPrefab;
-    public ActionPreviewUI ActionPreviewPrefab;
+    public AgentInfoBarUI ActionPreviewPrefab;
     public float TurnWidth { get { return Line.rect.width / TurnCount; } }
+    public Dictionary<CombatAgent, AgentInfoBarUI> AgentInfoBars = new Dictionary<CombatAgent, AgentInfoBarUI>();
 
     private List<RectTransform> _tickMarks = new List<RectTransform>();
 
@@ -25,6 +26,7 @@ public class ActionBarUI : MonoBehaviour
         {
             var preview = Instantiate(ActionPreviewPrefab, transform);
             preview.SetCombatAgent(agent);
+            AgentInfoBars[agent] = preview;
         }
     }
 

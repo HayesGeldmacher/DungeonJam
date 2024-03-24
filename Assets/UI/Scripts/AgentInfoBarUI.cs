@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class ActionPreviewUI : MonoBehaviour
+public class AgentInfoBarUI : MonoBehaviour
 {
+    [SerializeField] private RectTransform _targetedIcon;
     [SerializeField] private HealthBarUI _healthBar;
-    [SerializeField] private ActionIconUI _actionIconPrefab;
     [SerializeField] private RectTransform _line;
+    [SerializeField] private ActionIconUI _actionIconPrefab;
     private CombatAgent _combatAgent;
-    private ActionBarUI _actionBar;
+    private CombatBarUI _actionBar;
     private List<ActionIconUI> _actionIcons = new List<ActionIconUI>();
 
     public void SetCombatAgent(CombatAgent agent)
@@ -19,9 +20,14 @@ public class ActionPreviewUI : MonoBehaviour
         _healthBar.SetCombatAgent(agent);
     }
 
+    public void SetTargeted(bool targeted)
+    {
+        _targetedIcon.gameObject.SetActive(targeted);
+    }
+
     private void Awake()
     {
-        _actionBar = GetComponentInParent<ActionBarUI>();
+        _actionBar = GetComponentInParent<CombatBarUI>();
         for (int i = 0; i < _actionBar.TurnCount*2; i++)
         {
             _actionIcons.Add(Instantiate(_actionIconPrefab, _line).SetTurnWidth(_line.rect.width / _actionBar.TurnCount));

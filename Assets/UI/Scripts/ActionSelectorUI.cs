@@ -12,27 +12,45 @@ public enum ActionSelectorState
 public class ActionSelectorUI : MonoBehaviour
 {
     public List<Action> actions;
-    [SerializeField] private PlayerAgent playerAgent;
-    [SerializeField] private ActionButtonUI actionButtonPrefab;
-    [SerializeField] private GridLayoutGroup buttonGrid;
+    [SerializeField] private PlayerAgent _playerAgent;
+    [SerializeField] private ActionButtonUI _actionButtonPrefab;
+    [SerializeField] private GridLayoutGroup _buttonGrid;
+    [SerializeField] private CombatBarUI _actionBar;
     private CombatManager _combatManager;
     private ActionSelectorState _state = ActionSelectorState.SelectingAction;
     private Action _selectedAction;
-    private List<CombatAgent> _selectedTargets;
+    private List<CombatAgent> _selectedTargets = new List<CombatAgent>();
 
     private void Start()
     {
         _combatManager = FindObjectOfType<CombatManager>();
         foreach (var action in actions)
         {
-            ActionButtonUI actionButton = Instantiate(actionButtonPrefab, buttonGrid.transform).SetAction(action);
+            ActionButtonUI actionButton = Instantiate(_actionButtonPrefab, _buttonGrid.transform).SetAction(action);
             actionButton.GetComponent<Button>().onClick.AddListener(() => OnActionSelected(action));
         }
     }
 
     private void Update()
     {
-        if (_state == ActionSelectorState.SelectingTarget && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
+        if (_state == ActionSelectorState.SelectingTarget && _selectedAction.TargetType == TargetType.SingleTarget)
+        {
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+            {
+                int index = _combatManager.Enemies.IndexOf(_selectedTargets[0]) + 1;
+                if (index >= _combatManager.Enemies.Count) index = 0;
+                _selectedTargets = new List<CombatAgent> { _combatManager.Enemies[index] };
+                UpdateTargetIcons();
+            }
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A))
+            {
+                int index = _combatManager.Enemies.IndexOf(_selectedTargets[0]) - 1;
+                if (index < 0) index = _combatManager.Enemies.Count - 1;
+                _selectedTargets = new List<CombatAgent> { _combatManager.Enemies[index] };
+                UpdateTargetIcons();
+            }
+        }
+        if (_state == ActionSelectorState.SelectingTarget && Input.GetKeyDown(KeyCode.Space))
         {
             OnTargetsSelected(_selectedTargets);
         }
@@ -55,12 +73,32 @@ public class ActionSelectorUI : MonoBehaviour
         {
             _selectedTargets = new List<CombatAgent>(_combatManager.Enemies);
         }
+        UpdateTargetIcons();
     }
 
     private void OnTargetsSelected(List<CombatAgent> targets)
     {
-        playerAgent.QueueAction(_selectedAction.CreateWithUserAndTargets(playerAgent, targets));
+        _playerAgent.QueueAction(_selectedAction.CreateWithUserAndTargets(_playerAgent, targets));
         _state = ActionSelectorState.SelectingAction;
         _selectedAction = null;
+        _selectedTargets = new List<CombatAgent>();
+        for (int i = 0; i < _combatManager.Enemies.Count; i++)
+        {
+            var bar = _actionBar.AgentInfoBars[_combatManager.Enemies[i]];
+            bar.SetTargeted(false);
+        }
+    }
+
+    private void UpdateTargetIcons()
+    {
+        foreach (var agent in _combatManager.Agents)
+        {
+            var bar = _actionBar.AgentInfoBars[agent];
+            bar.SetTargeted(_selectedTargets.Contains(agent));
+        }
+        if (_selectedAction != null && _selectedAction.TargetType == TargetType.Self)
+        {
+            _actionBar.AgentInfoBars[_playerAgent].SetTargeted(true);
+        }
     }
 }
