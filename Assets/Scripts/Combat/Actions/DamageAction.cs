@@ -10,6 +10,10 @@ public class DamageAction : Action
 
     public override void Execute(CombatManager context)
     {
-        Debug.Log("Dealing " + damage + " damage!");
+        foreach (var agent in Targets)
+        {
+            agent.TakeDamage(damage);
+            Debug.Log($"{User.name} dealt {damage} damage to {agent.name}.");
+        }
     }
 }

@@ -12,10 +12,11 @@ public class ActionSelectorUI : MonoBehaviour
 
     private void Start()
     {
+        CombatManager combatManager = FindObjectOfType<CombatManager>();
         foreach (var action in actions)
         {
             ActionButtonUI actionButton = Instantiate(actionButtonPrefab, buttonGrid.transform).SetAction(action);
-            actionButton.GetComponent<Button>().onClick.AddListener(() => playerAgent.QueueAction(action));
+            actionButton.GetComponent<Button>().onClick.AddListener(() => playerAgent.CreateAndQueueAction(action, combatManager.Enemies[0]));
         }
     }
 }

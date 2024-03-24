@@ -17,6 +17,12 @@ public abstract class Action : ScriptableObject
         return this;
     }
 
+    public Action SetTarget(CombatAgent target)
+    {
+        Targets = new List<CombatAgent> { target };
+        return this;
+    }
+    
     public Action SetTargets(List<CombatAgent> targets)
     {
         Targets = targets;

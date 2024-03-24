@@ -4,19 +4,19 @@ using UnityEngine;
 
 public abstract class CombatAgent : MonoBehaviour
 {
-    public int StartingHealth;
+    public int MaxHealth;
     public int CurrentHealth { get; private set; }
 
     private Queue<Action> _actions = new Queue<Action>();
     private Stack<Action> _actionHistory = new Stack<Action>();
 
-    [SerializeField] private Action _preparationAction;
-    [SerializeField] private Action _recoveryAction;
-    [SerializeField] private Action _nothingAction;
+    [SerializeField] protected Action _preparationAction;
+    [SerializeField] protected Action _recoveryAction;
+    [SerializeField] protected Action _nothingAction;
     
-    private void Awake()
+    protected virtual void Awake()
     {
-        CurrentHealth = StartingHealth;
+        CurrentHealth = MaxHealth;
     }
 
     public void TakeDamage(int damage)
@@ -24,12 +24,12 @@ public abstract class CombatAgent : MonoBehaviour
         CurrentHealth -= damage;
     }
 
-    public void QueueAction(Action action)
+    public void CreateAndQueueAction(Action action, CombatAgent target)
     {
-        QueueAction(action, new List<CombatAgent>());
+        CreateAndQueueAction(action, new List<CombatAgent> { target });
     }
     
-    public void QueueAction(Action action, List<CombatAgent> targets)
+    public void CreateAndQueueAction(Action action, List<CombatAgent> targets)
     {
         for (int i = 0; i < action.PreparationTurns; i++)
         {

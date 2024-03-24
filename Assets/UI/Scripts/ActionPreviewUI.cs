@@ -6,15 +6,17 @@ using System.Linq;
 
 public class ActionPreviewUI : MonoBehaviour
 {
+    [SerializeField] private HealthBarUI _healthBar;
     [SerializeField] private ActionIconUI _actionIconPrefab;
     [SerializeField] private RectTransform _line;
-    [SerializeField] private CombatAgent _combatAgent;
+    private CombatAgent _combatAgent;
     private ActionBarUI _actionBar;
     private List<ActionIconUI> _actionIcons = new List<ActionIconUI>();
 
     public void SetCombatAgent(CombatAgent agent)
     {
         _combatAgent = agent;
+        _healthBar.SetCombatAgent(agent);
     }
 
     private void Awake()
@@ -22,8 +24,9 @@ public class ActionPreviewUI : MonoBehaviour
         _actionBar = GetComponentInParent<ActionBarUI>();
         for (int i = 0; i < _actionBar.TurnCount*2; i++)
         {
-            _actionIcons.Add(Instantiate(_actionIconPrefab, _line));
+            _actionIcons.Add(Instantiate(_actionIconPrefab, _line).SetTurnWidth(_line.rect.width / _actionBar.TurnCount));
         }
+        _healthBar.SetCombatAgent(_combatAgent);
     }
 
     private void Update()
@@ -48,12 +51,12 @@ public class ActionPreviewUI : MonoBehaviour
         
         for (int i = 0; i < _actionIcons.Count/2; i++)
         {
-            _actionIcons[i].GetComponent<RectTransform>().anchoredPosition = new Vector2((i + normalizedTime) * _actionBar.TurnWidth, 0);
+            _actionIcons[i].GetComponent<RectTransform>().anchoredPosition = new Vector2((i + normalizedTime) * _line.rect.width / _actionBar.TurnCount, 0);
             _actionIcons[i].SetAction(actions[i]);
         }
         for (int i = _actionIcons.Count/2; i < _actionIcons.Count; i++)
         {
-            _actionIcons[i].GetComponent<RectTransform>().anchoredPosition = new Vector2((i + normalizedTime) * _actionBar.TurnWidth, 0);
+            _actionIcons[i].GetComponent<RectTransform>().anchoredPosition = new Vector2((i + normalizedTime) * _line.rect.width / _actionBar.TurnCount, 0);
             _actionIcons[i].SetAction(history[i - _actionIcons.Count/2]);
         }
     }

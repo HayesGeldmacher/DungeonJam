@@ -8,8 +8,14 @@ public class ActionIconUI : MonoBehaviour
     [SerializeField] private Image _icon = null;
     [SerializeField] private Image _preparationIcon = null;
     [SerializeField] private Image _recoveryIcon = null;
-
+    private float _turnWidth = 0;
     private Action _action = null;
+
+    public ActionIconUI SetTurnWidth(float width)
+    {
+        _turnWidth = width;
+        return this;
+    }
 
     public void SetAction(Action action)
     {
@@ -23,9 +29,9 @@ public class ActionIconUI : MonoBehaviour
         _preparationIcon.gameObject.SetActive(action != null && action.PreparationTurns > 0);
         _recoveryIcon.gameObject.SetActive(action != null && !(action is NothingAction || action is PreparationAction || action is RecoveryAction));
         if (action != null && action.PreparationTurns > 0)
-            _preparationIcon.rectTransform.offsetMax = new Vector2(action.PreparationTurns * GetComponentInParent<ActionBarUI>().TurnWidth - _icon.rectTransform.rect.width, _preparationIcon.rectTransform.offsetMax.y);
+            _preparationIcon.rectTransform.offsetMax = new Vector2(action.PreparationTurns * _turnWidth - _icon.rectTransform.rect.width, _preparationIcon.rectTransform.offsetMax.y);
         if (action != null)
-            _recoveryIcon.rectTransform.offsetMin = new Vector2((1 + action.RecoveryTurns) * -GetComponentInParent<ActionBarUI>().TurnWidth + _icon.rectTransform.rect.width, _recoveryIcon.rectTransform.offsetMin.y);
+            _recoveryIcon.rectTransform.offsetMin = new Vector2(-(1 + action.RecoveryTurns) * _turnWidth + _icon.rectTransform.rect.width, _recoveryIcon.rectTransform.offsetMin.y);
     }
 
 
