@@ -8,10 +8,14 @@ public class DummyAgent : CombatAgent
 
     private void Update()
     {
-        if (GetActions().Count < 5)
+        if (GetActions().Count < 5 && IsAlive)
         {
             Action action = Random.Range(0f, 1f) < 0.5 ? _action : _nothingAction;
             QueueAction(action.CreateWithUserAndTarget(this, _combatManager.Player));
+        }
+        if (!IsAlive)
+        {
+            _actions.Clear();
         }
     }
 }

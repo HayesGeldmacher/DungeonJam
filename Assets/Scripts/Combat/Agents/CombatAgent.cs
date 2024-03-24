@@ -11,8 +11,8 @@ public abstract class CombatAgent : MonoBehaviour
     public int DamageNegation { get; private set; } = 0;
     public int DamageAmplification { get; private set; } = 0;
 
-    private Queue<Action> _actions = new Queue<Action>();
-    private Stack<Action> _actionHistory = new Stack<Action>();
+    protected Queue<Action> _actions = new Queue<Action>();
+    protected Stack<Action> _actionHistory = new Stack<Action>();
 
     [SerializeField] protected Action _preparationAction;
     [SerializeField] protected Action _recoveryAction;

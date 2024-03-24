@@ -20,6 +20,15 @@ public class ActionSelectorUI : MonoBehaviour
     private ActionSelectorState _state = ActionSelectorState.SelectingAction;
     private Action _selectedAction;
     private List<CombatAgent> _selectedTargets = new List<CombatAgent>();
+    private Dictionary<KeyCode, int> _actionIndex = new Dictionary<KeyCode, int>
+    {
+        { KeyCode.Q, 0 },
+        { KeyCode.A, 1 },
+        { KeyCode.W, 2 },
+        { KeyCode.S, 3 },
+        { KeyCode.E, 4 },
+        { KeyCode.D, 5 },
+    };
 
     private void Start()
     {
@@ -33,27 +42,41 @@ public class ActionSelectorUI : MonoBehaviour
 
     private void Update()
     {
-        if (_state == ActionSelectorState.SelectingTarget && _selectedAction.TargetType == TargetType.SingleTarget)
+        if (_state == ActionSelectorState.SelectingAction)
         {
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+            foreach (var kvp in _actionIndex)
             {
-                int index = _combatManager.Enemies.IndexOf(_selectedTargets[0]) + 1;
-                if (index >= _combatManager.Enemies.Count) index = 0;
-                _selectedTargets = new List<CombatAgent> { _combatManager.Enemies[index] };
-                UpdateTargetIcons();
-            }
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A))
-            {
-                int index = _combatManager.Enemies.IndexOf(_selectedTargets[0]) - 1;
-                if (index < 0) index = _combatManager.Enemies.Count - 1;
-                _selectedTargets = new List<CombatAgent> { _combatManager.Enemies[index] };
-                UpdateTargetIcons();
+                if (Input.GetKeyDown(kvp.Key))
+                {
+                    OnActionSelected(actions[kvp.Value]);
+                }
             }
         }
-        if (_state == ActionSelectorState.SelectingTarget && Input.GetKeyDown(KeyCode.Space))
+        else if (_state == ActionSelectorState.SelectingTarget)
         {
-            OnTargetsSelected(_selectedTargets);
+            if (_selectedAction.TargetType == TargetType.SingleTarget)
+            {
+                if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+                {
+                    int index = _combatManager.Enemies.IndexOf(_selectedTargets[0]) + 1;
+                    if (index >= _combatManager.Enemies.Count) index = 0;
+                    _selectedTargets = new List<CombatAgent> { _combatManager.Enemies[index] };
+                    UpdateTargetIcons();
+                }
+                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A))
+                {
+                    int index = _combatManager.Enemies.IndexOf(_selectedTargets[0]) - 1;
+                    if (index < 0) index = _combatManager.Enemies.Count - 1;
+                    _selectedTargets = new List<CombatAgent> { _combatManager.Enemies[index] };
+                    UpdateTargetIcons();
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                OnTargetsSelected(_selectedTargets);
+            }
         }
+
     }
 
     private void OnActionSelected(Action action)
