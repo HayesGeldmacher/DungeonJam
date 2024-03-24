@@ -13,11 +13,6 @@ public class CombatManager : MonoBehaviour
     public List<CombatAgent> Enemies = new List<CombatAgent>();
     public List<CombatAgent> Agents { get => new List<CombatAgent> { Player }.Concat(Enemies).ToList(); }
 
-    // private void Awake()
-    // {
-    //
-    // }
-
     private void Update()
     {
         TurnTime += Time.deltaTime;
@@ -30,9 +25,24 @@ public class CombatManager : MonoBehaviour
 
     private void ProcessTick()
     {
+        List<Action> actions = new List<Action>();
         foreach (var agent in Agents)
         {
-            agent.GetNextAction().SetUser(agent).Execute(this);
+            actions.Add(agent.GetNextAction());
+        }
+        foreach (var action in actions)
+        {
+            if (action.Priority)
+            {
+                action.Execute(this);
+            }
+        }
+        foreach (var action in actions)
+        {
+            if (!action.Priority)
+            {
+                action.Execute(this);
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ public abstract class Action : ScriptableObject
     public Sprite Icon;
     public int PreparationTurns;
     public int RecoveryTurns;
+    [HideInInspector] public bool Priority { get; protected set; } = false;
     [HideInInspector] public CombatAgent User { get; private set; } = null;
     [HideInInspector] public List<CombatAgent> Targets { get; private set; } = new List<CombatAgent>();
 

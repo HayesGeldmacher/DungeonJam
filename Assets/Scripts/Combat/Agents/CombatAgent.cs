@@ -6,6 +6,10 @@ public abstract class CombatAgent : MonoBehaviour
 {
     public int MaxHealth;
     public int CurrentHealth { get; private set; }
+    public bool IsAlive => CurrentHealth > 0;
+
+    public int DamageNegation { get; private set; } = 0;
+    public int DamageAmplification { get; private set; } = 0;
 
     private Queue<Action> _actions = new Queue<Action>();
     private Stack<Action> _actionHistory = new Stack<Action>();
@@ -21,7 +25,7 @@ public abstract class CombatAgent : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        CurrentHealth -= damage;
+        CurrentHealth -= Mathf.Abs(damage - DamageNegation);
     }
 
     public void CreateAndQueueAction(Action action, CombatAgent target)
@@ -31,11 +35,14 @@ public abstract class CombatAgent : MonoBehaviour
     
     public void CreateAndQueueAction(Action action, List<CombatAgent> targets)
     {
+        action = Instantiate(action).SetUser(this).SetTargets(targets);
+        // Maybe do other things with the action here
+         
         for (int i = 0; i < action.PreparationTurns; i++)
         {
             _actions.Enqueue(Instantiate(_preparationAction).SetUser(this));
         }
-        _actions.Enqueue(Instantiate(action).SetUser(this).SetTargets(targets));
+        _actions.Enqueue(action);
         for (int i = 0; i < action.RecoveryTurns; i++)
         {
             _actions.Enqueue(Instantiate(_recoveryAction).SetUser(this));
