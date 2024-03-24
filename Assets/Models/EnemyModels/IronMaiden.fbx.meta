@@ -1,0 +1,207 @@
+fileFormatVersion: 2
+guid: 565b444dc6b7ce44c952e7ee4d376c86
+ModelImporter:
+  serializedVersion: 20200
+  internalIDToNameTable:
+  - first:
+      74: 313877352898772866
+    second: doorIdle
+  - first:
+      74: 6612516252446436728
+    second: armIdle
+  - first:
+      74: 5404790573208995052
+    second: armCast
+  - first:
+      74: -3615940939015252198
+    second: armFoldIdle
+  - first:
+      74: 7573954805529058429
+    second: armFoldIdle.001
+  - first:
+      74: 5373772667595899892
+    second: ArmSwing1
+  - first:
+      74: -996304600214546072
+    second: meatIdle
+  - first:
+      74: -5880362417314937795
+    second: meatHurt
+  - first:
+      74: 8270030501812084000
+    second: Armature|doorIdle
+  - first:
+      74: -5277862070583697131
+    second: Armature|DoorSwing
+  - first:
+      74: 4812618017512101702
+    second: Armature.001|armCast
+  - first:
+      74: 2402803812703968204
+    second: Armature.001|armFoldIdle
+  - first:
+      74: 4751851491570850975
+    second: Armature.001|armFoldIdle.001
+  - first:
+      74: 5785840036375376654
+    second: Armature.001|armIdle
+  - first:
+      74: -1540487472876167819
+    second: Armature.001|ArmSwing1
+  - first:
+      74: -264476499675931336
+    second: Armature.001|ArmSwing2
+  - first:
+      74: 2640852613963864374
+    second: Armature.001|doorIdle
+  - first:
+      74: 2794886765873744661
+    second: Armature.001|DoorSwing
+  - first:
+      74: 8107312456828738268
+    second: Armature.001|MeatExplode
+  - first:
+      74: 5311459733345924773
+    second: Armature.001|meatHurt
+  - first:
+      74: 523229998028553696
+    second: Armature.001|meatIdle
+  - first:
+      74: 5696334903466814543
+    second: Armature.002|armCast
+  - first:
+      74: -2560074616061370806
+    second: Armature.002|armFoldIdle
+  - first:
+      74: 8452360314891540470
+    second: Armature.002|armFoldIdle.001
+  - first:
+      74: -4595872505889241097
+    second: Armature.002|armIdle
+  - first:
+      74: 4214753751129529377
+    second: Armature.002|doorIdle
+  - first:
+      74: -9013041401346365561
+    second: Armature.002|DoorSwing
+  - first:
+      74: 7892909817728961666
+    second: Armature.002|MeatExplode
+  - first:
+      74: -6547545140745051071
+    second: Armature.002|meatHurt
+  - first:
+      74: -8336438313056188498
+    second: Armature.002|meatIdle
+  - first:
+      74: -7468807716026202072
+    second: Armature.003|doorIdle
+  - first:
+      74: 2719739470549012193
+    second: Armature.003|DoorSwing
+  - first:
+      74: -7668607214335223394
+    second: Armature.003|MeatExplode
+  - first:
+      74: 7726160552308309452
+    second: Armature.003|meatHurt
+  - first:
+      74: -4421807837739693343
+    second: Armature.003|meatIdle
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
