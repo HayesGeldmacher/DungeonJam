@@ -2,7 +2,10 @@ fileFormatVersion: 2
 guid: ad7eb58c347ab9b4995cb79cd95e2e8d
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -6297695739392695895
+    second: ArmBones|ArmIdle
   externalObjects: {}
   materials:
     materialImportMode: 2
