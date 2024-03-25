@@ -73,7 +73,7 @@ public class CombatManager : MonoBehaviour
         {
             action.Animate();
             yield return new WaitForEndOfFrame();
-            float animationTime = action.Animator.GetCurrentAnimatorStateInfo(0).length;
+            float animationTime = action.Animator == null ? 0 : action.Animator.GetCurrentAnimatorStateInfo(0).length;
             yield return new WaitForSeconds(animationTime + DelayBetweenActions);
         }
         action.Execute(this);
