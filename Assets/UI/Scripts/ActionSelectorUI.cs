@@ -14,12 +14,14 @@ public class ActionSelectorUI : MonoBehaviour
     public List<Action> actions;
     [SerializeField] private PlayerAgent _playerAgent;
     [SerializeField] private ActionButtonUI _actionButtonPrefab;
+    [SerializeField] private TargetReticleUI _targetReticlePrefab;
     [SerializeField] private GridLayoutGroup _buttonGrid;
     [SerializeField] private CombatBarUI _actionBar;
     private CombatManager _combatManager;
     private ActionSelectorState _state = ActionSelectorState.SelectingAction;
     private Action _selectedAction;
     private List<CombatAgent> _selectedTargets = new List<CombatAgent>();
+    private Dictionary<CombatAgent, TargetReticleUI> _targetReticles = new Dictionary<CombatAgent, TargetReticleUI>();
     private Dictionary<KeyCode, int> _actionIndex = new Dictionary<KeyCode, int>
     {
         { KeyCode.Q, 0 },
@@ -37,6 +39,12 @@ public class ActionSelectorUI : MonoBehaviour
         {
             ActionButtonUI actionButton = Instantiate(_actionButtonPrefab, _buttonGrid.transform).SetAction(action);
             actionButton.GetComponent<Button>().onClick.AddListener(() => OnActionSelected(action));
+        }
+        foreach (var agent in _combatManager.Agents)
+        {
+            TargetReticleUI targetReticle = Instantiate(_targetReticlePrefab, transform);
+            targetReticle.SetAgent(agent);
+            _targetReticles[agent] = targetReticle;
         }
     }
 
@@ -59,14 +67,14 @@ public class ActionSelectorUI : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
                 {
                     int index = _combatManager.Enemies.IndexOf(_selectedTargets[0]) + 1;
-                    if (index >= _combatManager.Enemies.Count) index = 0;
+                    if (index >= _combatManager.Enemies.Count) index = _combatManager.Enemies.Count - 1;
                     _selectedTargets = new List<CombatAgent> { _combatManager.Enemies[index] };
                     UpdateTargetIcons();
                 }
                 if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A))
                 {
                     int index = _combatManager.Enemies.IndexOf(_selectedTargets[0]) - 1;
-                    if (index < 0) index = _combatManager.Enemies.Count - 1;
+                    if (index < 0) index = 0;
                     _selectedTargets = new List<CombatAgent> { _combatManager.Enemies[index] };
                     UpdateTargetIcons();
                 }
@@ -105,11 +113,7 @@ public class ActionSelectorUI : MonoBehaviour
         _state = ActionSelectorState.SelectingAction;
         _selectedAction = null;
         _selectedTargets = new List<CombatAgent>();
-        for (int i = 0; i < _combatManager.Enemies.Count; i++)
-        {
-            var bar = _actionBar.AgentInfoBars[_combatManager.Enemies[i]];
-            bar.SetTargeted(false);
-        }
+        UpdateTargetIcons();
     }
 
     private void UpdateTargetIcons()
@@ -117,7 +121,9 @@ public class ActionSelectorUI : MonoBehaviour
         foreach (var agent in _combatManager.Agents)
         {
             var bar = _actionBar.AgentInfoBars[agent];
+            var reticle = _targetReticles[agent];
             bar.SetTargeted(_selectedTargets.Contains(agent));
+            reticle.SetTargeted(_selectedTargets.Contains(agent));
         }
         if (_selectedAction != null && _selectedAction.TargetType == TargetType.Self)
         {

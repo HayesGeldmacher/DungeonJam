@@ -14,6 +14,8 @@ public abstract class CombatAgent : MonoBehaviour
     protected Queue<Action> _actions = new Queue<Action>();
     protected Stack<Action> _actionHistory = new Stack<Action>();
 
+    public Transform TargetedReticlePosition;
+
     [SerializeField] protected Action _preparationAction;
     [SerializeField] protected Action _recoveryAction;
     [SerializeField] protected Action _nothingAction;
