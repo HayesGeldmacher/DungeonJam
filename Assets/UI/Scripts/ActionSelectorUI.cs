@@ -11,7 +11,6 @@ public enum ActionSelectorState
 
 public class ActionSelectorUI : MonoBehaviour
 {
-    public List<Action> actions;
     [SerializeField] private PlayerAgent _playerAgent;
     [SerializeField] private ActionButtonUI _actionButtonPrefab;
     [SerializeField] private TargetReticleUI _targetReticlePrefab;
@@ -20,26 +19,46 @@ public class ActionSelectorUI : MonoBehaviour
     private CombatManager _combatManager;
     private ActionSelectorState _state = ActionSelectorState.SelectingAction;
     private Action _selectedAction;
+    private Animator _animator;
     private List<CombatAgent> _selectedTargets = new List<CombatAgent>();
     private Dictionary<CombatAgent, TargetReticleUI> _targetReticles = new Dictionary<CombatAgent, TargetReticleUI>();
-    private Dictionary<KeyCode, int> _actionIndex = new Dictionary<KeyCode, int>
-    {
-        { KeyCode.Q, 0 },
-        { KeyCode.A, 1 },
-        { KeyCode.W, 2 },
-        { KeyCode.S, 3 },
-        { KeyCode.E, 4 },
-        { KeyCode.D, 5 },
-    };
+    private Dictionary<KeyCode, Action> _actionKeys = new Dictionary<KeyCode, Action>();
 
     private void Start()
     {
         _combatManager = FindObjectOfType<CombatManager>();
-        foreach (var action in actions)
+        foreach (var action in _playerAgent.LeftHandActions)
+        {
+            ActionButtonUI actionButton = Instantiate(_actionButtonPrefab, _buttonGrid.transform).SetAction(action);
+            actionButton.GetComponent<Button>().onClick.AddListener(() => {
+                    _animator = _playerAgent.LeftHandAnimator;
+                    OnActionSelected(action);
+            });
+        }
+        foreach (var action in _playerAgent.GenericActions)
         {
             ActionButtonUI actionButton = Instantiate(_actionButtonPrefab, _buttonGrid.transform).SetAction(action);
             actionButton.GetComponent<Button>().onClick.AddListener(() => OnActionSelected(action));
         }
+        foreach (var action in _playerAgent.RightHandActions)
+        {
+            ActionButtonUI actionButton = Instantiate(_actionButtonPrefab, _buttonGrid.transform).SetAction(action);
+            actionButton.GetComponent<Button>().onClick.AddListener(() => {
+                    _animator = _playerAgent.RightHandAnimator;
+                    OnActionSelected(action);
+            });
+        }
+        _actionKeys[KeyCode.Q] = _playerAgent.LeftHandActions[0];
+        _actionKeys[KeyCode.A] = _playerAgent.LeftHandActions[1];
+        _actionKeys[KeyCode.W] = _playerAgent.GenericActions[0];
+        _actionKeys[KeyCode.S] = _playerAgent.GenericActions[1];
+        _actionKeys[KeyCode.E] = _playerAgent.RightHandActions[0];
+        _actionKeys[KeyCode.D] = _playerAgent.RightHandActions[1];
+        // foreach (var action in actions)
+        // {
+        //     ActionButtonUI actionButton = Instantiate(_actionButtonPrefab, _buttonGrid.transform).SetAction(action);
+        //     actionButton.GetComponent<Button>().onClick.AddListener(() => OnActionSelected(action));
+        // }
         foreach (var agent in _combatManager.Agents)
         {
             TargetReticleUI targetReticle = Instantiate(_targetReticlePrefab, transform);
@@ -50,13 +69,14 @@ public class ActionSelectorUI : MonoBehaviour
 
     private void Update()
     {
+
         if (_state == ActionSelectorState.SelectingAction)
         {
-            foreach (var kvp in _actionIndex)
+            foreach (var kvp in _actionKeys)
             {
                 if (Input.GetKeyDown(kvp.Key))
                 {
-                    OnActionSelected(actions[kvp.Value]);
+                    OnActionSelected(kvp.Value);
                 }
             }
         }
@@ -109,9 +129,10 @@ public class ActionSelectorUI : MonoBehaviour
 
     private void OnTargetsSelected(List<CombatAgent> targets)
     {
-        _playerAgent.QueueAction(_selectedAction.CreateWithUserAndTargets(_playerAgent, targets));
+        _playerAgent.QueueAction(_selectedAction.CreateWithUserAndTargets(_playerAgent, targets).SetAnimator(_animator));
         _state = ActionSelectorState.SelectingAction;
         _selectedAction = null;
+        _animator = null;
         _selectedTargets = new List<CombatAgent>();
         UpdateTargetIcons();
     }

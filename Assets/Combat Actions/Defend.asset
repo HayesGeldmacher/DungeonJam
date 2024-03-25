@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4e95f70395a5074f8530159f3904875, type: 3}
-  m_Name: Torch Thrust
+  m_Name: Defend
   m_EditorClassIdentifier: 
-  Name: Torch Thrust
+  Name: Defend
   Icon: {fileID: 21300000, guid: 0f82cffb2fa6f6946b29ad98661b42bb, type: 3}
+  AnimationName: ShieldGuard
   PreparationTurns: 0
   RecoveryTurns: 0
   _damage: 10

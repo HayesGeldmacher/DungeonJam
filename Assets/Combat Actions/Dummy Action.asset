@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 
   Icon: {fileID: 21300000, guid: 58ecdfe65985f8f439e1ee3934e6a55a, type: 3}
-  AnimationTrigger: action1
+  AnimationName: VampireAttack1
   PreparationTurns: 0
   RecoveryTurns: 0
   _damage: 5

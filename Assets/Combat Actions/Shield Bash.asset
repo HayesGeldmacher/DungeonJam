@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b785090029ab2d4b8fdf0ebbdb1acf9, type: 3}
-  m_Name: Throw Flames
+  m_Name: Shield Bash
   m_EditorClassIdentifier: 
-  Name: Throw Flames
+  Name: Shield Bash
   Icon: {fileID: 21300000, guid: 858332fb8f9547141adbd90152b9d789, type: 3}
+  AnimationName: ShieldBash
   PreparationTurns: 0
   RecoveryTurns: 1
   _damage: 10

@@ -628,13 +628,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9e3c571954aa84596e8bdec7de98f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actions:
-  - {fileID: 11400000, guid: 0b4b2be978e2cfa4e8e12f24be6b4d8d, type: 2}
-  - {fileID: 11400000, guid: c9960a2e383875f40ad9ba306b35f495, type: 2}
-  - {fileID: 11400000, guid: aeaa8e814cb55e243a05907a86740e30, type: 2}
-  - {fileID: 11400000, guid: 6346410a9bf4bcd4fb703c4da8eea287, type: 2}
-  - {fileID: 11400000, guid: 309823da5cd0f854e83361ae6025be03, type: 2}
-  - {fileID: 11400000, guid: 60a680ace931c0e4e8e2638193ee7055, type: 2}
   _playerAgent: {fileID: 1184103538}
   _actionButtonPrefab: {fileID: 5763686981073457238, guid: 239157a7df1fb194ba1a5df26dd0b47f, type: 3}
   _targetReticlePrefab: {fileID: 6508791685077952167, guid: 9c4821713fe4cbd4d896d51e998c28ae, type: 3}
@@ -908,7 +901,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <TurnDuration>k__BackingField: 3
-  <ActionTime>k__BackingField: 0.5
+  <DelayBetweenActions>k__BackingField: 0.4
   Player: {fileID: 1184103538}
   Enemies:
   - {fileID: 561340468}
@@ -2147,6 +2140,17 @@ MonoBehaviour:
   _nothingAction: {fileID: 11400000, guid: b0a9040fc1e45d941abff86accd1be48, type: 2}
   _primaryAction: {fileID: 11400000, guid: 7382e7d3188638e42b3d62ca33787725, type: 2}
   _secondaryAction: {fileID: 0}
+  GenericActions:
+  - {fileID: 11400000, guid: aeaa8e814cb55e243a05907a86740e30, type: 2}
+  - {fileID: 11400000, guid: 6346410a9bf4bcd4fb703c4da8eea287, type: 2}
+  LeftHandAnimator: {fileID: 619469402}
+  LeftHandActions:
+  - {fileID: 11400000, guid: 0b4b2be978e2cfa4e8e12f24be6b4d8d, type: 2}
+  - {fileID: 11400000, guid: c9960a2e383875f40ad9ba306b35f495, type: 2}
+  RightHandAnimator: {fileID: 1003216864}
+  RightHandActions:
+  - {fileID: 11400000, guid: 309823da5cd0f854e83361ae6025be03, type: 2}
+  - {fileID: 11400000, guid: 60a680ace931c0e4e8e2638193ee7055, type: 2}
 --- !u!4 &1184103539
 Transform:
   m_ObjectHideFlags: 0

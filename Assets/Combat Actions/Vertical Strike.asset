@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Vertical Strike
   Icon: {fileID: 21300000, guid: f928dac39b5e140468766ef7d06ae008, type: 3}
+  AnimationName: SwordSweep
   PreparationTurns: 1
   RecoveryTurns: 0
   _damage: 15

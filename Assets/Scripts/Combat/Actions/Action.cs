@@ -13,7 +13,7 @@ public abstract class Action : ScriptableObject
 {
     public string Name;
     public Sprite Icon;
-    public string AnimationTrigger;
+    public string AnimationName;
     public int PreparationTurns;
     public int RecoveryTurns;
     public abstract TargetType TargetType { get; protected set; }
@@ -21,6 +21,7 @@ public abstract class Action : ScriptableObject
 
     public CombatAgent User { get; private set; } = null;
     public List<CombatAgent> Targets { get; private set; } = new List<CombatAgent>();
+    public Animator Animator { get; private set; } = null;
 
     public Action CreateWithUser(CombatAgent user)
     {
@@ -37,15 +38,21 @@ public abstract class Action : ScriptableObject
         return Instantiate(this).SetUser(user).SetTargets(targets);
     }
 
-    private Action SetUser(CombatAgent user)
+    public Action SetUser(CombatAgent user)
     {
         User = user;
         return this;
     }
 
-    private Action SetTargets(List<CombatAgent> targets)
+    public Action SetTargets(List<CombatAgent> targets)
     {
         Targets = targets;
+        return this;
+    }
+
+    public Action SetAnimator(Animator animator)
+    {
+        Animator = animator;
         return this;
     }
 
@@ -53,10 +60,9 @@ public abstract class Action : ScriptableObject
     
     public void Animate()
     {
-        Animator animator = User.GetComponent<Animator>();
-        if (animator != null)
+        if (Animator != null && AnimationName != null && Animator.HasState(0, Animator.StringToHash(AnimationName)))
         {
-            animator.SetTrigger(AnimationTrigger);
+            Animator.Play(AnimationName);
         }
     }
 }
