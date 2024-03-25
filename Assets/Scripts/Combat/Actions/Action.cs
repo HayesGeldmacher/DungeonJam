@@ -13,6 +13,7 @@ public abstract class Action : ScriptableObject
 {
     public string Name;
     public Sprite Icon;
+    public string AnimationTrigger;
     public int PreparationTurns;
     public int RecoveryTurns;
     public abstract TargetType TargetType { get; protected set; }
@@ -49,4 +50,13 @@ public abstract class Action : ScriptableObject
     }
 
     public abstract void Execute(CombatManager context);
+    
+    public void Animate()
+    {
+        Animator animator = User.GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.SetTrigger(AnimationTrigger);
+        }
+    }
 }

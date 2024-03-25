@@ -36,6 +36,7 @@ public class CombatManager : MonoBehaviour
             if (action.Priority)
             {
                 action.Execute(this);
+                action.Animate();
             }
         }
         foreach (var action in actions)
@@ -43,6 +44,7 @@ public class CombatManager : MonoBehaviour
             if (!action.Priority)
             {
                 action.Execute(this);
+                action.Animate();
             }
         }
     }
