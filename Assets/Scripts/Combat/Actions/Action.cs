@@ -22,6 +22,7 @@ public abstract class Action : ScriptableObject
     public CombatAgent User { get; private set; } = null;
     public List<CombatAgent> Targets { get; private set; } = new List<CombatAgent>();
     public Animator Animator { get; private set; } = null;
+    private List<CombatAgent> _waitingFor = new List<CombatAgent>();
 
     public Action CreateWithUser(CombatAgent user)
     {
@@ -60,11 +61,30 @@ public abstract class Action : ScriptableObject
 
     public abstract void Execute(CombatManager context);
     
-    public void Animate()
+    public virtual IEnumerator Animate()
     {
-        if (Animator != null && AnimationName != null && Animator.HasState(0, Animator.StringToHash(AnimationName)))
+        yield return PlayAnimation(Animator, AnimationName);
+        _waitingFor.Clear();
+        foreach (var target in Targets)
         {
-            Animator.Play(AnimationName);
+            target.StartCoroutine(PlayHitAnimations(target));
+        }
+        yield return new WaitWhile(() => _waitingFor.Count < Targets.Count);
+    }
+
+    private IEnumerator PlayHitAnimations(CombatAgent target)
+    {
+        yield return target.AnimateHit();
+        _waitingFor.Add(target);
+    }
+
+    private IEnumerator PlayAnimation(Animator animator, string animationName)
+    {
+        if (animator != null && animator.HasState(0, Animator.StringToHash(animationName)))
+        {
+            animator.Play(animationName);
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         }
     }
 }

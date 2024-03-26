@@ -61,14 +61,12 @@ public class CombatManager : MonoBehaviour
     private IEnumerator ProcessAction(Action action)
     {
         OnActionStart?.Invoke(action);
+        yield return action.Animate();
+        action.Execute(this);
         if (IsRealAction(action))
         {
-            action.Animate();
-            yield return new WaitForEndOfFrame();
-            float animationTime = action.Animator == null ? 0 : action.Animator.GetCurrentAnimatorStateInfo(0).length;
-            yield return new WaitForSeconds(animationTime + DelayBetweenActions);
+            yield return new WaitForSeconds(DelayBetweenActions);
         }
-        action.Execute(this);
         OnActionEnd?.Invoke(action);
     }
 }

@@ -13,15 +13,13 @@ public class PlayerAgent : CombatAgent
     public Animator RightHandAnimator;
     public List<Action> RightHandActions = new List<Action>();
 
-    // void Update()
-    // {
-    //     if (Input.GetMouseButtonDown(0))
-    //     {
-    //         QueueAction(_primaryAction);
-    //     }
-    //     if (Input.GetMouseButtonDown(1))
-    //     {
-    //         QueueAction(_secondaryAction);
-    //     }
-    //
+    public override IEnumerator AnimateHit()
+    {
+        yield return null;
+    }
+
+    public override IEnumerator AnimateDeath()
+    {
+        yield return null;
+    }
 }

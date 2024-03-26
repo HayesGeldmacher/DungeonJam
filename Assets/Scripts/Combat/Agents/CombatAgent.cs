@@ -61,4 +61,7 @@ public abstract class CombatAgent : MonoBehaviour
     {
         return new List<Action>(_actionHistory);
     }
+
+    public abstract IEnumerator AnimateHit();
+    public abstract IEnumerator AnimateDeath();
 }

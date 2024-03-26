@@ -18,4 +18,17 @@ public class DummyAgent : CombatAgent
             _actions.Clear();
         }
     }
+
+    public override IEnumerator AnimateHit()
+    {
+        GetComponent<Animator>().Play("Hurt");
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+    }
+
+    public override IEnumerator AnimateDeath()
+    {
+        gameObject.SetActive(false);
+        yield return null;
+    }
 }
