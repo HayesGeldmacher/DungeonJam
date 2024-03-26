@@ -58,12 +58,12 @@ public class AgentInfoBarUI : MonoBehaviour
         for (int i = 0; i < _actionIcons.Count/2; i++)
         {
             _actionIcons[i].GetComponent<RectTransform>().anchoredPosition = new Vector2((i + normalizedTime) * _line.rect.width / _actionBar.TurnCount, 0);
-            _actionIcons[i].SetAction(actions[i]);
+            _actionIcons[i].SetTurnWidth(_line.rect.width / _actionBar.TurnCount).SetAction(actions[i]);
         }
         for (int i = _actionIcons.Count/2; i < _actionIcons.Count; i++)
         {
             _actionIcons[i].GetComponent<RectTransform>().anchoredPosition = new Vector2((i + normalizedTime) * _line.rect.width / _actionBar.TurnCount, 0);
-            _actionIcons[i].SetAction(history[i - _actionIcons.Count/2]);
+            _actionIcons[i].SetTurnWidth(_line.rect.width / _actionBar.TurnCount).SetAction(history[i - _actionIcons.Count/2]);
         }
     }
 } 

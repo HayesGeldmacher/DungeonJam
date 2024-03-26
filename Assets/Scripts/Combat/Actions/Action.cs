@@ -62,6 +62,7 @@ public abstract class Action : ScriptableObject
     {
         if (Animator != null && AnimationName != null && Animator.HasState(0, Animator.StringToHash(AnimationName)))
         {
+            Debug.Log($"Playing animation {AnimationName} for {User.name} on {Animator.name}");
             Animator.Play(AnimationName);
         }
     }

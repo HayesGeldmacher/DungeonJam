@@ -12,7 +12,7 @@ public abstract class DamageAction : Action
         foreach (var target in Targets)
         {
             target.TakeDamage(_damage);
-            Debug.Log($"{target.name} took {_damage} damage.");
+            // Debug.Log($"{target.name} took {_damage} damage.");
         }
     }
 }

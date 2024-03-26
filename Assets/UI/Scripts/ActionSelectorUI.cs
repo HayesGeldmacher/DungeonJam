@@ -54,11 +54,6 @@ public class ActionSelectorUI : MonoBehaviour
         _actionKeys[KeyCode.S] = _playerAgent.GenericActions[1];
         _actionKeys[KeyCode.E] = _playerAgent.RightHandActions[0];
         _actionKeys[KeyCode.D] = _playerAgent.RightHandActions[1];
-        // foreach (var action in actions)
-        // {
-        //     ActionButtonUI actionButton = Instantiate(_actionButtonPrefab, _buttonGrid.transform).SetAction(action);
-        //     actionButton.GetComponent<Button>().onClick.AddListener(() => OnActionSelected(action));
-        // }
         foreach (var agent in _combatManager.Agents)
         {
             TargetReticleUI targetReticle = Instantiate(_targetReticlePrefab, transform);
@@ -77,6 +72,14 @@ public class ActionSelectorUI : MonoBehaviour
                 if (Input.GetKeyDown(kvp.Key))
                 {
                     OnActionSelected(kvp.Value);
+                    if (kvp.Key == KeyCode.Q || kvp.Key == KeyCode.A)
+                    {
+                        _animator = _playerAgent.LeftHandAnimator;
+                    }
+                    else if (kvp.Key == KeyCode.E || kvp.Key == KeyCode.D)
+                    {
+                        _animator = _playerAgent.RightHandAnimator;
+                    }
                 }
             }
         }

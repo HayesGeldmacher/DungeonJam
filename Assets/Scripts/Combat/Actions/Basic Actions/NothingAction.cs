@@ -10,6 +10,6 @@ public class NothingAction : Action
 
     public override void Execute(CombatManager context)
     {
-        Debug.Log("Nothing happens");
+        // Debug.Log("Nothing happens");
     }
 }

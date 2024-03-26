@@ -10,6 +10,6 @@ public class DebugAction : Action
 
     public override void Execute(CombatManager context)
     {
-        Debug.Log("Debug Action Executed");
+        // Debug.Log("Debug Action Executed");
     }
 }
