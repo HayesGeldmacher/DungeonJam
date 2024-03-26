@@ -16,5 +16,5 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 858332fb8f9547141adbd90152b9d789, type: 3}
   AnimationName: ShieldBash
   PreparationTurns: 0
-  RecoveryTurns: 1
+  RecoveryTurns: 0
   _damage: 10

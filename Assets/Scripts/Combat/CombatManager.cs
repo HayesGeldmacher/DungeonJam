@@ -10,6 +10,10 @@ public class CombatManager : MonoBehaviour
     public float TurnTime { get; private set; } = 0.0f;
     public float NormalizedTurnTime => TurnTime / TurnDuration;
 
+    public delegate void ActionHandler(Action action);
+    public event ActionHandler OnActionStart;
+    public event ActionHandler OnActionEnd;
+
     public CombatAgent Player;
     public List<CombatAgent> Enemies = new List<CombatAgent>();
     public List<CombatAgent> Agents { get => new List<CombatAgent> { Player }.Concat(Enemies).ToList(); }
@@ -40,35 +44,23 @@ public class CombatManager : MonoBehaviour
         {
             actions.Add(agent, agent.GetNextAction());
         }
+        List<CombatAgent> orderedAgents = new List<CombatAgent>() { Player }.Concat(Enemies).ToList();
         // TODO: Buffs / Effects should be processed here
 
-        if (actions[Player].Priority)
+        foreach (var agent in orderedAgents.Where(agent => actions[agent].Priority))
         {
-            yield return ProcessAction(actions[Player]);
+            yield return ProcessAction(actions[agent]);
         }
-        foreach (var enemy in Enemies)
+        foreach (var agent in orderedAgents.Where(agent => !actions[agent].Priority))
         {
-            if (actions[enemy].Priority)
-            {
-                yield return ProcessAction(actions[enemy]);
-            }
-        }
-        if (!actions[Player].Priority)
-        {
-            yield return ProcessAction(actions[Player]);
-        }
-        foreach (var enemy in Enemies)
-        {
-            if (!actions[enemy].Priority)
-            {
-                yield return ProcessAction(actions[enemy]);
-            }
+            yield return ProcessAction(actions[agent]);
         }
         _processingTurn = false;
     }
 
     private IEnumerator ProcessAction(Action action)
     {
+        OnActionStart?.Invoke(action);
         if (IsRealAction(action))
         {
             action.Animate();
@@ -77,5 +69,6 @@ public class CombatManager : MonoBehaviour
             yield return new WaitForSeconds(animationTime + DelayBetweenActions);
         }
         action.Execute(this);
+        OnActionEnd?.Invoke(action);
     }
 }

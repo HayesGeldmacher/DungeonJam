@@ -15,7 +15,7 @@ public class CombatBanner : MonoBehaviour
     private void Start()
     {
         _parentAnim = GetComponent<Animator>();
-        StartCoroutine(Appear("This is test string!"));
+        // StartCoroutine(Appear("This is test string!"));
     }
 
     private IEnumerator Appear(string info)
@@ -28,6 +28,11 @@ public class CombatBanner : MonoBehaviour
         _anim.SetTrigger("disappear");
         yield return new WaitForSeconds(1);
         Destroy(gameObject);
+    }
+    
+    public void CallAppear(string info)
+    {
+        StartCoroutine(Appear(info));
     }
 
     public void CallPushDown()

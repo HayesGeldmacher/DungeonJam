@@ -15,6 +15,6 @@ MonoBehaviour:
   Name: Impaler Strike
   Icon: {fileID: 21300000, guid: 28ffcec7888748044ad589c33bde972a, type: 3}
   AnimationName: SwordStab
-  PreparationTurns: 1
-  RecoveryTurns: 1
+  PreparationTurns: 0
+  RecoveryTurns: 0
   _damage: 25
